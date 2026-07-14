@@ -2,7 +2,7 @@ import 'package:fiore/app.dart';
 import 'package:fiore/modules/home/home_card.dart';
 import 'package:fiore/modules/home/summary_card.dart';
 import 'package:fiore/core/theme/app_colors.dart';
-import 'package:fiore/modules/produtos/controller/produto_page.dart';
+import 'package:fiore/modules/produtos/view/produto_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -144,7 +144,7 @@ class HomePage extends StatelessWidget {
                       Navigator.push(
                         context,
                           MaterialPageRoute(
-                          builder: (_) => const ProdutoPage(),
+                          builder: (_) => ProdutoPage(),
                         ),
                       );
                     },

@@ -1,32 +1,29 @@
 import 'package:fiore/core/theme/app_colors.dart';
+import 'package:fiore/modules/produtos/controller/produto_controller.dart';
 import 'package:flutter/material.dart';
 
 class ProdutoPage extends StatelessWidget {
-  const ProdutoPage({super.key});
+  ProdutoPage({super.key});
+
+  final ProdutoController controller = ProdutoController();
 
   @override
   Widget build(BuildContext context) {
-    final categorias = [
-      ("Planner", Icons.event_note_outlined, 12),
-      ("Caderno de Receita", Icons.menu_book_outlined, 8),
-      ("Caderno A5", Icons.book_outlined, 15),
-      ("Caderno A4", Icons.library_books_outlined, 6),
-      ("Diário", Icons.auto_stories_outlined, 4),
-      ("Bloco", Icons.sticky_note_2_outlined, 20),
-    ];
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("Produtos"),
         centerTitle: true,
       ),
+
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primary,
-        onPressed: () {
-          // Abrir cadastro de produto
-        },
-        child: const Icon(Icons.add, color: Colors.white),
+        onPressed: () => controller.adicionarProduto(context),
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       ),
+
       body: SafeArea(
         child: ListView.separated(
           padding: const EdgeInsets.fromLTRB(
@@ -35,10 +32,10 @@ class ProdutoPage extends StatelessWidget {
             20,
             100,
           ),
-          itemCount: categorias.length,
+          itemCount: controller.categorias.length,
           separatorBuilder: (_, __) => const SizedBox(height: 12),
           itemBuilder: (_, index) {
-            final categoria = categorias[index];
+            final categoria = controller.categorias[index];
 
             return Card(
               elevation: 1,
@@ -69,9 +66,7 @@ class ProdutoPage extends StatelessWidget {
                   "${categoria.$3} produtos",
                 ),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () {
-                  // Abrir lista de produtos dessa categoria
-                },
+                onTap: () => controller.abrirCategoria(context, index),
               ),
             );
           },
