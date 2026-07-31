@@ -1,4 +1,5 @@
 import 'package:fiore/core/theme/app_colors.dart';
+import 'package:fiore/core/helpers/icon_mapper.dart';
 import 'package:fiore/modules/produtos/controller/produto_controller.dart';
 import 'package:flutter/material.dart';
 
@@ -59,11 +60,11 @@ class _ProdutoFormPageState extends State<ProdutoFormPage> {
                   items: controller.categorias.map((categoria) {
                     return DropdownMenuItem<String>(
 
-                      value: categoria.$1,
+                      value: categoria.nome,
                       child: Row(
                         children: [
                           Icon(
-                            categoria.$2,
+                            iconForCategoria(categoria.nome),
                             color: AppColors.primary,
                             size: 22,
                           ),
@@ -71,7 +72,7 @@ class _ProdutoFormPageState extends State<ProdutoFormPage> {
                           const SizedBox(width: 10),
 
                           Text(
-                            categoria.$1,
+                            categoria.nome,
                           ),
                         ],
                       ),
