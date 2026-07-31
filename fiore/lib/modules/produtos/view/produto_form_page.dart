@@ -1,37 +1,30 @@
+import 'package:fiore/core/helpers/input_formatter.dart';
 import 'package:fiore/core/theme/app_colors.dart';
 import 'package:fiore/core/helpers/icon_mapper.dart';
 import 'package:fiore/modules/produtos/controller/produto_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ProdutoFormPage extends StatefulWidget {
   final ProdutoController controller;
 
-  const ProdutoFormPage({
-    super.key,
-    required this.controller,
-  });
+  const ProdutoFormPage({super.key, required this.controller});
 
   @override
   State<ProdutoFormPage> createState() => _ProdutoFormPageState();
 }
 
 class _ProdutoFormPageState extends State<ProdutoFormPage> {
-
   ProdutoController get controller => widget.controller;
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Novo Produto"),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text("Novo Produto"), centerTitle: true),
 
       body: AnimatedBuilder(
         animation: controller,
         builder: (_, __) {
-
           return SingleChildScrollView(
             padding: const EdgeInsets.all(20),
             child: Column(
@@ -59,7 +52,6 @@ class _ProdutoFormPageState extends State<ProdutoFormPage> {
 
                   items: controller.categorias.map((categoria) {
                     return DropdownMenuItem<String>(
-
                       value: categoria.nome,
                       child: Row(
                         children: [
@@ -71,16 +63,14 @@ class _ProdutoFormPageState extends State<ProdutoFormPage> {
 
                           const SizedBox(width: 10),
 
-                          Text(
-                            categoria.nome,
-                          ),
+                          Text(categoria.nome),
                         ],
                       ),
                     );
                   }).toList(),
 
                   onChanged: (value) {
-                    if(value != null) {
+                    if (value != null) {
                       controller.alterarCategoria(value);
                     }
                   },
@@ -90,17 +80,15 @@ class _ProdutoFormPageState extends State<ProdutoFormPage> {
 
                 TextField(
                   controller: controller.precoController,
-
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
-                  ),
-
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    CurrencyInputFormatter(),
+                  ],
                   decoration: const InputDecoration(
                     labelText: "Preço",
                     prefixText: "R\$ ",
-                    prefixIcon: Icon(
-                      Icons.attach_money,
-                    ),
+                    prefixIcon: Icon(Icons.attach_money),
                     border: OutlineInputBorder(),
                   ),
                 ),
@@ -109,9 +97,7 @@ class _ProdutoFormPageState extends State<ProdutoFormPage> {
 
                 Card(
                   child: SwitchListTile(
-                    title: const Text(
-                      "Produto ativo",
-                    ),
+                    title: const Text("Produto ativo"),
 
                     subtitle: Text(
                       controller.ativo
@@ -132,18 +118,11 @@ class _ProdutoFormPageState extends State<ProdutoFormPage> {
 
                 Card(
                   child: ListTile(
+                    leading: const Icon(Icons.calendar_today),
 
-                    leading: const Icon(
-                      Icons.calendar_today,
-                    ),
+                    title: const Text("Data de cadastro"),
 
-                    title: const Text(
-                      "Data de cadastro",
-                    ),
-
-                    subtitle: Text(
-                      formatarData(controller.cadastro),
-                    ),
+                    subtitle: Text(formatarData(controller.cadastro)),
 
                     onTap: () async {
                       final data = await showDatePicker(
@@ -153,7 +132,7 @@ class _ProdutoFormPageState extends State<ProdutoFormPage> {
                         lastDate: DateTime(2100),
                       );
 
-                      if(data != null) {
+                      if (data != null) {
                         controller.alterarCadastro(data);
                       }
                     },
@@ -176,9 +155,7 @@ class _ProdutoFormPageState extends State<ProdutoFormPage> {
                       Navigator.pop(context);
                     },
 
-                    child: const Text(
-                      "Salvar Produto",
-                    ),
+                    child: const Text("Salvar Produto"),
                   ),
                 ),
               ],
@@ -189,10 +166,9 @@ class _ProdutoFormPageState extends State<ProdutoFormPage> {
     );
   }
 
-
   String formatarData(DateTime data) {
-    return "${data.day.toString().padLeft(2,'0')}/"
-        "${data.month.toString().padLeft(2,'0')}/"
+    return "${data.day.toString().padLeft(2, '0')}/"
+        "${data.month.toString().padLeft(2, '0')}/"
         "${data.year}";
   }
 }
