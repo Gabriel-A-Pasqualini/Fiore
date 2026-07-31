@@ -1,3 +1,4 @@
+import 'package:fiore/core/helpers/icon_mapper.dart';
 import 'package:fiore/core/theme/app_colors.dart';
 import 'package:fiore/modules/produtos/controller/produto_controller.dart';
 import 'package:flutter/material.dart';
@@ -51,19 +52,19 @@ class ProdutoPage extends StatelessWidget {
                   radius: 24,
                   backgroundColor: AppColors.primary.withOpacity(.1),
                   child: Icon(
-                    categoria.$2,
+                    iconForCategoria(categoria.nome),
                     color: AppColors.primary,
                   ),
                 ),
                 title: Text(
-                  categoria.$1,
+                  categoria.nome,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 17,
                   ),
                 ),
                 subtitle: Text(
-                  "${categoria.$3} produtos",
+                  "${categoria.quantidade} produtos",
                 ),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () => controller.abrirCategoria(context, index),

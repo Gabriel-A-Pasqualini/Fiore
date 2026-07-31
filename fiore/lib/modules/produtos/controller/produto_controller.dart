@@ -1,3 +1,4 @@
+import 'package:fiore/modules/produtos/model/categoria.dart';
 import 'package:fiore/modules/produtos/service/categoria_service.dart';
 import 'package:fiore/modules/produtos/view/produto_form_page.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class ProdutoController extends ChangeNotifier {
     CategoriaService? categoriaService,
   }) : categoriaService = categoriaService ?? CategoriaService();
 
-  List<(String, IconData, int)> get categorias {
+  List<Categoria> get categorias {
     return categoriaService.buscarCategorias();
   }
 
@@ -41,7 +42,7 @@ class ProdutoController extends ChangeNotifier {
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text("Abrir ${categoria.$1}"),
+        content: Text("Abrir ${categoria.nome}"),
       ),
     ); 
   }
